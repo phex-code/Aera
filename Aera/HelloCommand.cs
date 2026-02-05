@@ -1,0 +1,28 @@
+﻿using System;
+namespace Aera
+{
+    internal class HelloCommand : ICommand
+    {
+        public string Name => "hello";
+        public string Description => "Prints a random hello message";
+        public string Usage => "Usage: hello";
+
+        public bool AcceptsPipeInput => false;
+        public bool IsDestructive => false;
+
+        public string[] Aliases => new[] { "hi", "hey", "hai" };
+
+        public void Execute(string[] args, _s tool)
+        {
+            var rnd = new Random();
+            int hey = rnd.Next(0, 9);
+            string[] heys = { "HAII", "Welcome to Aera", "Welcome", "Salutations", "Greetings", "Hello and welcome", "Goodday", "It's a pleasure meeting you", "Greeted be thy"};
+            tool.cwl(heys[hey]);
+        }
+
+        public void ExecutePipe(string input, string[] args, _s tool)
+        {
+            tool.cwlc("example: cannot be used in a pipe", "Red");
+        }
+    }
+}
