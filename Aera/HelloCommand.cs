@@ -4,7 +4,7 @@ namespace Aera
     internal class HelloCommand : ICommand
     {
         public string Name => "hello";
-        public string Description => "Prints a random hello message";
+        public string Description => "Prints a random hello message"; // i got bored
         public string Usage => "Usage: hello";
 
         public bool AcceptsPipeInput => false;
