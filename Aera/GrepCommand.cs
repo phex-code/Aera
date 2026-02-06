@@ -15,7 +15,7 @@ namespace Aera
 
         public string[] Aliases => Array.Empty<string>();
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             if (!TryParse(args, tool, out var options, out var pattern, out var files))
                 return;
@@ -30,21 +30,21 @@ namespace Aera
             {
                 if (!File.Exists(file))
                 {
-                    tool.cwlc($"grep: file not found: {file}", "Red");
+                    tool.WriteLineColor($"grep: file not found: {file}", "Red");
                     continue;
                 }
 
                 foreach (var line in File.ReadLines(file))
                 {
                     if (Matches(line, pattern, comparison, options.Invert))
-                        tool.cwl(line);
+                        tool.WriteLine(line);
                 }
             }
 
-            tool.FlushPipe();
+            tool.FlushPipeBuffer();
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
             if (!TryParse(args, tool, out var options, out var pattern, out _))
                 return;
@@ -60,10 +60,10 @@ namespace Aera
             foreach (var line in lines)
             {
                 if (Matches(line, pattern, comparison, options.Invert))
-                    tool.cwl(line);
+                    tool.WriteLine(line);
             }
 
-            tool.FlushPipe();
+            tool.FlushPipeBuffer();
         }
 
         /* ================= HELPERS ================= */
@@ -80,7 +80,7 @@ namespace Aera
 
         private static bool TryParse(
             string[] args,
-            _s tool,
+            ShellContext tool,
             out GrepOptions options,
             out string pattern,
             out List<string> files)
@@ -108,7 +108,7 @@ namespace Aera
 
             if (pattern == null)
             {
-                tool.cwlc("grep: missing search pattern", "Red");
+                tool.WriteLineColor("grep: missing search pattern", "Red");
                 return false;
             }
 

@@ -13,11 +13,11 @@ namespace Aera
         public bool IsDestructive => true;
         public string[] Aliases => Array.Empty<string>();
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             if (!tool.IsSudo)
             {
-                tool.cwlc("rm: permission denied (sudo required)", "Red");
+                tool.WriteLineColor("rm: permission denied (sudo required)", "Red");
                 return;
             }
 
@@ -32,7 +32,7 @@ namespace Aera
 
             if (args.Length - index != 1)
             {
-                tool.cwl("Usage: rm [-r] <target>");
+                tool.WriteLine("Usage: rm [-r] <target>");
                 return;
             }
 
@@ -43,13 +43,13 @@ namespace Aera
 
             if (!isFile && !isDir)
             {
-                tool.cwlc($"rm: cannot remove '{target}': No such file or directory", "Red");
+                tool.WriteLineColor($"rm: cannot remove '{target}': No such file or directory", "Red");
                 return;
             }
 
             if (isDir && !recursive)
             {
-                tool.cwlc($"rm: cannot remove '{target}': Is a directory", "Red");
+                tool.WriteLineColor($"rm: cannot remove '{target}': Is a directory", "Red");
                 return;
             }
 
@@ -58,7 +58,7 @@ namespace Aera
 
             if (!tool.Confirm(msg, defaultYes: false))
             {
-                tool.cwlc("rm: operation cancelled", "Yellow");
+                tool.WriteLineColor("rm: operation cancelled", "Yellow");
                 return;
             }
 
@@ -67,31 +67,31 @@ namespace Aera
                 if (isFile)
                 {
                     File.Delete(target);
-                    tool.cwlc("File deleted", "green");
+                    tool.WriteLineColor("File deleted", "green");
                 }
                 else
                 {
                     Directory.Delete(target, recursive: true);
-                    tool.cwlc("Directory deleted", "green");
+                    tool.WriteLineColor("Directory deleted", "green");
                 }
             }
             catch (UnauthorizedAccessException)
             {
-                tool.cwlc("rm: permission denied", "Red");
+                tool.WriteLineColor("rm: permission denied", "Red");
             }
             catch (IOException ex)
             {
-                tool.cwlc($"rm: {ex.Message}", "Red");
+                tool.WriteLineColor($"rm: {ex.Message}", "Red");
             }
             catch (Exception ex)
             {
-                tool.cwlc($"rm: {ex.Message}", "Red");
+                tool.WriteLineColor($"rm: {ex.Message}", "Red");
             }
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwlc("rm: refusing to read from pipe (destructive command)", "Red");
+            tool.WriteLineColor("rm: refusing to read from pipe (destructive command)", "Red");
         }
     }
 }

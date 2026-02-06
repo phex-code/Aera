@@ -14,7 +14,7 @@
 
         public string[] Aliases => new[] { "man" };
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             if (args.Length == 0)
             {
@@ -32,16 +32,16 @@
 
             if (!manager.TryGet(name, out var cmd))
             {
-                tool.cwl($"No manual entry for '{name}'.");
+                tool.WriteLine($"No manual entry for '{name}'.");
                 return;
             }
 
             manager.ShowCommandHelp(cmd, tool);
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwlc("help(man): cannot be used in a pipe", "Red");
+            tool.WriteLineColor("help(man): cannot be used in a pipe", "Red");
         }
     }
 }

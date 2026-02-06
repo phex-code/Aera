@@ -13,22 +13,22 @@ namespace Aera
         public bool IsDestructive => false;
         public string[] Aliases => Array.Empty<string>();
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             string dir = Directory.GetCurrentDirectory();
 
-            tool.cwlc($"Directory: {dir}", "DarkCyan");
+            tool.WriteLineColor($"Directory: {dir}", "DarkCyan");
 
             foreach (var d in Directory.GetDirectories(dir))
-                tool.cwlc($"[DIR]  {Path.GetFileName(d)}", "Yellow");
+                tool.WriteLineColor($"[DIR]  {Path.GetFileName(d)}", "Yellow");
 
             foreach (var f in Directory.GetFiles(dir))
-                tool.cwl($"[FILE] {Path.GetFileName(f)}");
+                tool.WriteLine($"[FILE] {Path.GetFileName(f)}");
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwlc("ls: cannot accept piped input", "Red");
+            tool.WriteLineColor("ls: cannot accept piped input", "Red");
         }
     }
 }

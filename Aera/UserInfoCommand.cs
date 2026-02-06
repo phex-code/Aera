@@ -10,20 +10,20 @@
         public bool IsDestructive => false;
         public string[] Aliases => Array.Empty<string>();
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             if (args.Length != 0)
             {
-                tool.cwl("Usage: userinfo");
+                tool.WriteLine("Usage: userinfo");
                 return;
             }
 
             tool.ShowUser(false);
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwl("userinfo: does not accept piped input");
+            tool.WriteLine("userinfo: does not accept piped input");
         }
     }
     internal class WhoAmICommand : ICommand
@@ -36,20 +36,20 @@
         public bool IsDestructive => false;
         public string[] Aliases => Array.Empty<string>();
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             if (args.Length != 0)
             {
-                tool.cwl("Usage: whoami");
+                tool.WriteLine("Usage: whoami");
                 return;
             }
 
-            tool.cwlc(tool.un(), "Blue");
+            tool.WriteLineColor(tool.un(), "Blue");
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwl("whoami: does not accept piped input");
+            tool.WriteLine("whoami: does not accept piped input");
         }
     }
 }

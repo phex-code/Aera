@@ -13,7 +13,7 @@ namespace Aera
         public bool IsDestructive => false;
         public string[] Aliases => Array.Empty<string>();
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             bool recursive = false;
             int index = 0;
@@ -26,7 +26,7 @@ namespace Aera
 
             if (args.Length - index != 2)
             {
-                tool.cwl("Usage: cp [-r] <source> <destination>");
+                tool.WriteLine("Usage: cp [-r] <source> <destination>");
                 return;
             }
 
@@ -45,7 +45,7 @@ namespace Aera
                 {
                     if (!recursive)
                     {
-                        tool.cwl($"cp: -r not specified; omitting directory '{source}'");
+                        tool.WriteLine($"cp: -r not specified; omitting directory '{source}'");
                         return;
                     }
 
@@ -53,17 +53,17 @@ namespace Aera
                     return;
                 }
 
-                tool.cwl($"cp: cannot stat '{source}': No such file or directory");
+                tool.WriteLine($"cp: cannot stat '{source}': No such file or directory");
             }
             catch (Exception ex)
             {
-                tool.cwl($"cp: {ex.Message}");
+                tool.WriteLine($"cp: {ex.Message}");
             }
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwl("cp: does not accept piped input");
+            tool.WriteLine("cp: does not accept piped input");
         }
 
         private void CopyFile(string source, string dest)

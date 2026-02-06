@@ -41,7 +41,7 @@ namespace Aera
         /// Entry point for executing user input.
         /// Handles pipe splitting and dispatch.
         /// </summary>
-        public void Execute(string input, _s tool)
+        public void Execute(string input, ShellContext tool)
         {
             // Split on first pipe only
             var parts = input.Split('|', 2, StringSplitOptions.TrimEntries);
@@ -66,7 +66,7 @@ namespace Aera
         /// <summary>
         /// Executes a single command without piping.
         /// </summary>
-        private void ExecuteSingle(string input, _s tool)
+        private void ExecuteSingle(string input, ShellContext tool)
         {
             var parts = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length == 0)
@@ -77,7 +77,7 @@ namespace Aera
 
             if (!commands.TryGetValue(name, out var cmd))
             {
-                tool.cwl($"Command '{name}' not recognized.");
+                tool.WriteLine($"Command '{name}' not recognized.");
                 return;
             }
 
@@ -96,20 +96,20 @@ namespace Aera
         /// <summary>
         /// Executes a command in capture mode and returns its output.
         /// </summary>
-        private string CaptureOutput(string command, _s tool)
+        private string CaptureOutput(string command, ShellContext tool)
         {
             tool.CaptureMode = true;
             ExecuteSingle(command, tool);
             tool.CaptureMode = false;
 
-            return tool.FlushPipe();
+            return tool.FlushPipeBuffer();
         }
 
         /// <summary>
         /// Executes a command with piped input.
         /// Enforces pipe acceptance and destructive safety.
         /// </summary>
-        private void ExecutePiped(string command, string input, _s tool)
+        private void ExecutePiped(string command, string input, ShellContext tool)
         {
             var parts = command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length == 0)
@@ -120,19 +120,19 @@ namespace Aera
 
             if (!commands.TryGetValue(name, out var cmd))
             {
-                tool.cwl($"Command '{name}' not recognized.");
+                tool.WriteLine($"Command '{name}' not recognized.");
                 return;
             }
 
             if (!cmd.AcceptsPipeInput)
             {
-                tool.cwlc($"Command '{name}' does not accept piped input.", "Red");
+                tool.WriteLineColor($"Command '{name}' does not accept piped input.", "Red");
                 return;
             }
 
             if (cmd.IsDestructive && !tool.IsSudo)
             {
-                tool.cwlc($"'{name}' is destructive and requires sudo when piped.", "Red");
+                tool.WriteLineColor($"'{name}' is destructive and requires sudo when piped.", "Red");
                 return;
             }
 
@@ -144,13 +144,13 @@ namespace Aera
         /// <summary>
         /// Executes a command after sudo authentication.
         /// </summary>
-        public void ExecuteSudo(string name, string[] args, _s tool)
+        public void ExecuteSudo(string name, string[] args, ShellContext tool)
         {
             name = name.ToLower();
 
             if (!commands.TryGetValue(name, out var command))
             {
-                tool.cwl($"Command '{name}' not recognized.");
+                tool.WriteLine($"Command '{name}' not recognized.");
                 return;
             }
 
@@ -162,20 +162,20 @@ namespace Aera
         /// <summary>
         /// Displays detailed help for a single command.
         /// </summary>
-        public void ShowCommandHelp(ICommand cmd, _s tool)
+        public void ShowCommandHelp(ICommand cmd, ShellContext tool)
         {
-            tool.cwl($"Command: {cmd.Name}");
-            tool.cwl($"Description: {cmd.Description}");
+            tool.WriteLine($"Command: {cmd.Name}");
+            tool.WriteLine($"Description: {cmd.Description}");
 
             if (cmd.Aliases.Length > 0)
-                tool.cwl($"Aliases: {string.Join(", ", cmd.Aliases)}");
+                tool.WriteLine($"Aliases: {string.Join(", ", cmd.Aliases)}");
 
-            tool.cwl("");
-            tool.cwl($"Accepts pipe input: {(cmd.AcceptsPipeInput ? "yes" : "no")}");
-            tool.cwl($"Destructive: {(cmd.IsDestructive ? "yes" : "no")}");
+            tool.WriteLine("");
+            tool.WriteLine($"Accepts pipe input: {(cmd.AcceptsPipeInput ? "yes" : "no")}");
+            tool.WriteLine($"Destructive: {(cmd.IsDestructive ? "yes" : "no")}");
 
-            tool.cwl("");
-            tool.cwl("  " + cmd.Usage + "\n");
+            tool.WriteLine("");
+            tool.WriteLine("  " + cmd.Usage + "\n");
         }
 
         /// <summary>
@@ -189,9 +189,9 @@ namespace Aera
         /// <summary>
         /// Compact help listing (used by `help`).
         /// </summary>
-        public void ShowHelp(_s tool)
+        public void ShowHelp(ShellContext tool)
         {
-            tool.cwl("Aera Command Manual:");
+            tool.WriteLine("Aera Command Manual:");
 
             var uniqueCommands = orderedCommands
                 .GroupBy(c => c.Name)
@@ -206,21 +206,21 @@ namespace Aera
                     ? $"({string.Join(", ", cmd.Aliases)})"
                     : "";
 
-                tool.cwl(
+                tool.WriteLine(
                     $"  {cmd.Name,-nameWidth} {aliases,-aliasWidth} {cmd.Description} {cmd.Usage}"
                 );
             }
 
-            tool.cwl("");
-            tool.cwl("Use `man <command>` for detailed help.");
+            tool.WriteLine("");
+            tool.WriteLine("Use `man <command>` for detailed help.");
         }
 
         /// <summary>
         /// Verbose help listing (legacy / debug view).
         /// </summary>
-        public void ShowAll(_s tool)
+        public void ShowAll(ShellContext tool)
         {
-            tool.cwl("Aera Command Manual:");
+            tool.WriteLine("Aera Command Manual:");
 
             foreach (var cmd in orderedCommands)
             {
@@ -230,8 +230,8 @@ namespace Aera
 
                 string danger = cmd.IsDestructive ? " !" : "";
 
-                tool.cwl($"  {cmd.Name,-12} {cmd.Description}{aliasText}{danger}");
-                tool.cwl("  " + cmd.Usage + "\n");
+                tool.WriteLine($"  {cmd.Name,-12} {cmd.Description}{aliasText}{danger}");
+                tool.WriteLine("  " + cmd.Usage + "\n");
             }
         }
     }

@@ -13,11 +13,11 @@ namespace Aera
         public bool IsDestructive => false;
         public string[] Aliases => Array.Empty<string>();
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             if (args.Length != 1)
             {
-                tool.cwl("Usage: cd <directory>");
+                tool.WriteLine("Usage: cd <directory>");
                 return;
             }
 
@@ -28,21 +28,21 @@ namespace Aera
             }
             catch (DirectoryNotFoundException)
             {
-                tool.cwlc("cd: no such directory", "Red");
+                tool.WriteLineColor("cd: no such directory", "Red");
             }
             catch (UnauthorizedAccessException)
             {
-                tool.cwlc("cd: permission denied", "Red");
+                tool.WriteLineColor("cd: permission denied", "Red");
             }
             catch (Exception ex)
             {
-                tool.cwlc($"cd: {ex.Message}", "Red");
+                tool.WriteLineColor($"cd: {ex.Message}", "Red");
             }
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwlc("cd: cannot be used in a pipe", "Red");
+            tool.WriteLineColor("cd: cannot be used in a pipe", "Red");
         }
     }
 }

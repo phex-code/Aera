@@ -13,17 +13,17 @@ namespace Aera
         public bool IsDestructive => true;
         public string[] Aliases => Array.Empty<string>();
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             if (!tool.IsSudo)
             {
-                tool.cwlc("mv: permission denied (sudo required)", "Red");
+                tool.WriteLineColor("mv: permission denied (sudo required)", "Red");
                 return;
             }
 
             if (args.Length != 2)
             {
-                tool.cwl("Usage: mv <source> <destination>");
+                tool.WriteLine("Usage: mv <source> <destination>");
                 return;
             }
 
@@ -44,19 +44,19 @@ namespace Aera
                     return;
                 }
 
-                tool.cwl($"mv: cannot stat '{source}': No such file or directory");
+                tool.WriteLine($"mv: cannot stat '{source}': No such file or directory");
             }
             catch (UnauthorizedAccessException)
             {
-                tool.cwlc("mv: permission denied", "Red");
+                tool.WriteLineColor("mv: permission denied", "Red");
             }
             catch (IOException ex)
             {
-                tool.cwlc($"mv: {ex.Message}", "Red");
+                tool.WriteLineColor($"mv: {ex.Message}", "Red");
             }
             catch (Exception ex)
             {
-                tool.cwlc($"mv: {ex.Message}", "Red");
+                tool.WriteLineColor($"mv: {ex.Message}", "Red");
             }
         }
 
@@ -79,9 +79,9 @@ namespace Aera
             Directory.Move(source, dest);
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwlc("mv: cannot be used in a pipe", "Red");
+            tool.WriteLineColor("mv: cannot be used in a pipe", "Red");
         }
     }
 }

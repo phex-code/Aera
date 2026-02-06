@@ -15,7 +15,7 @@ namespace Aera
 
         public string[] Aliases => Array.Empty<string>();
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             if (args.Length == 0 || args.Contains("--help"))
             {
@@ -35,31 +35,31 @@ namespace Aera
                     if (File.Exists(path))
                     {
                         File.SetLastWriteTime(path, DateTime.Now);
-                        tool.cwlc($"Updated: {Path.GetFileName(path)}", "Yellow");
+                        tool.WriteLineColor($"Updated: {Path.GetFileName(path)}", "Yellow");
                     }
                     else
                     {
                         using (File.Create(path)) { }
-                        tool.cwlc($"Created: {Path.GetFileName(path)}", "Green");
+                        tool.WriteLineColor($"Created: {Path.GetFileName(path)}", "Green");
                     }
                 }
                 catch (Exception ex)
                 {
-                    tool.cwlc($"touch: {ex.Message}", "Red");
+                    tool.WriteLineColor($"touch: {ex.Message}", "Red");
                 }
             }
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwl("touch: does not accept piped input");
+            tool.WriteLine("touch: does not accept piped input");
         }
 
-        private void ShowHelp(_s tool)
+        private void ShowHelp(ShellContext tool)
         {
-            tool.cwl("Usage: touch <file> [file...]");
-            tool.cwl("");
-            tool.cwl("Creates empty files or updates modification times.");
+            tool.WriteLine("Usage: touch <file> [file...]");
+            tool.WriteLine("");
+            tool.WriteLine("Creates empty files or updates modification times.");
         }
     }
 }

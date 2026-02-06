@@ -46,26 +46,26 @@
             // but i am too tired to change them now :>
             // 1 week later: still haven't changed them
             string[] uinf = new string[2];
-            var tl = new _s();
+            var tl = new ShellContext();
 
-            tl.cwl("Welcome to Aera CLI!");
+            tl.WriteLine("Welcome to Aera CLI!");
             Thread.Sleep(1500);
             manager.Execute("clear", tl);
             if (File.Exists("user.ss"))
             {
                 uinf = File.ReadAllLines("user.ss");
-                tl.uwinf(uinf);
-                tl.clog();
-                tl.cwlc($"Hello {uinf[0]}", "Green");
+                tl.LoadUserCredentials(uinf);
+                tl.ValidatePassword();
+                tl.WriteLineColor($"Hello {uinf[0]}", "Green");
             }
             else
-                uinf = tl.cu();
+                uinf = tl.CreateUser();
             string n = tl.un();
 
             while (true)
             {
-                tl.cwc($"{n}> ", "Cyan");
-                string input = tl.cgi();
+                tl.WriteColor($"{n}> ", "Cyan");
+                string input = tl.GetInput();
                 manager.Execute(input, tl);
             }
 

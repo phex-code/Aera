@@ -12,14 +12,14 @@ namespace Aera
         public bool IsDestructive => false;
         public string[] Aliases => Array.Empty<string>();
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
-            tool.cwl(Directory.GetCurrentDirectory());
+            tool.WriteLine(Directory.GetCurrentDirectory());
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwlc("pwd: cannot be used in a pipe", "Red");
+            tool.WriteLineColor("pwd: cannot be used in a pipe", "Red");
         }
     }
 }

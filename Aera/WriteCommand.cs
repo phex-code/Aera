@@ -12,12 +12,12 @@ namespace Aera
         public bool IsDestructive => false;
         public string[] Aliases => Array.Empty<string>();
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             if (args.Length < 2)
             {
-                tool.cwl("Usage: write <type> <text>");
-                tool.cwl("Types: error, warning, success, text");
+                tool.WriteLine("Usage: write <type> <text>");
+                tool.WriteLine("Types: error, warning, success, text");
                 return;
             }
 
@@ -28,7 +28,7 @@ namespace Aera
         }
 
         // pipe support
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
             if (string.IsNullOrWhiteSpace(input))
                 return;
@@ -38,32 +38,32 @@ namespace Aera
             Write(type, input.TrimEnd(), tool);
         }
 
-        private void Write(string type, string text, _s tool)
+        private void Write(string type, string text, ShellContext tool)
         {
             switch (type)
             {
                 case "error":
-                    tool.cwc("ERROR: ", "Red");
-                    tool.cwl(text);
+                    tool.WriteColor("ERROR: ", "Red");
+                    tool.WriteLine(text);
                     break;
 
                 case "warning":
-                    tool.cwc("WARNING: ", "Yellow");
-                    tool.cwl(text);
+                    tool.WriteColor("WARNING: ", "Yellow");
+                    tool.WriteLine(text);
                     break;
 
                 case "success":
-                    tool.cwc("SUCCESS: ", "Green");
-                    tool.cwl(text);
+                    tool.WriteColor("SUCCESS: ", "Green");
+                    tool.WriteLine(text);
                     break;
 
                 case "text":
-                    tool.cwl(text);
+                    tool.WriteLine(text);
                     break;
 
                 default:
-                    tool.cwl($"write: unknown type '{type}'");
-                    tool.cwl("Types: error, warning, success, text");
+                    tool.WriteLine($"write: unknown type '{type}'");
+                    tool.WriteLine("Types: error, warning, success, text");
                     break;
             }
         }

@@ -13,11 +13,11 @@ namespace Aera
         public bool IsDestructive => false;
         public string[] Aliases => Array.Empty<string>();
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             if (args.Length != 1)
             {
-                tool.cwl("Usage: cat <file>");
+                tool.WriteLine("Usage: cat <file>");
                 return;
             }
 
@@ -25,30 +25,30 @@ namespace Aera
 
             if (!File.Exists(path))
             {
-                tool.cwlc("cat: file not found", "Red");
+                tool.WriteLineColor("cat: file not found", "Red");
                 return;
             }
 
             if ((File.GetAttributes(path) & FileAttributes.Directory) != 0)
             {
-                tool.cwlc("cat: cannot read a directory", "Red");
+                tool.WriteLineColor("cat: cannot read a directory", "Red");
                 return;
             }
 
             foreach (var line in File.ReadLines(path))
-                tool.cwl(line);
+                tool.WriteLine(line);
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
             if (args.Length != 0)
             {
-                tool.cwlc("cat: cannot combine piped input with files", "Red");
+                tool.WriteLineColor("cat: cannot combine piped input with files", "Red");
                 return;
             }
 
             if (!string.IsNullOrWhiteSpace(input))
-                tool.cwl(input.TrimEnd());
+                tool.WriteLine(input.TrimEnd());
         }
     }
 }

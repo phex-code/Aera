@@ -15,14 +15,14 @@ namespace Aera
 
         public string[] Aliases => new[] { "examp", "exmpl" }; // other strings to run the same command
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
-            tool.cwlc("THIS IS AN EXAMPLE COMMAND", "yellow"); // this is where you put the code of your command
+            tool.WriteLineColor("THIS IS AN EXAMPLE COMMAND", "yellow"); // this is where you put the code of your command
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwlc("example: cannot be used in a pipe", "Red"); // error message for when you try to use a non pipeable command with a pipe
+            tool.WriteLineColor("example: cannot be used in a pipe", "Red"); // error message for when you try to use a non pipeable command with a pipe
         }
     }
 }

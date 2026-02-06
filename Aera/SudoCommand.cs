@@ -20,11 +20,11 @@ namespace Aera
             manager = mgr;
         }
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             if (args.Length == 0)
             {
-                tool.cwl("Usage: sudo <command>");
+                tool.WriteLine("Usage: sudo <command>");
                 return;
             }
 
@@ -47,9 +47,9 @@ namespace Aera
             }
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwl("sudo: does not accept piped input");
+            tool.WriteLine("sudo: does not accept piped input");
         }
     }
 }

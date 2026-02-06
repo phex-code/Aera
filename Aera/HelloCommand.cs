@@ -12,17 +12,17 @@ namespace Aera
 
         public string[] Aliases => new[] { "hi", "hey", "hai" };
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             var rnd = new Random();
             int hey = rnd.Next(0, 9);
             string[] heys = { "HAII", "Welcome to Aera", "Welcome", "Salutations", "Greetings", "Hello and welcome", "Goodday", "It's a pleasure meeting you", "Greeted be thy"};
-            tool.cwl(heys[hey]);
+            tool.WriteLine(heys[hey]);
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwlc("example: cannot be used in a pipe", "Red");
+            tool.WriteLineColor("example: cannot be used in a pipe", "Red");
         }
     }
 }

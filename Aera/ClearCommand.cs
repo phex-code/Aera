@@ -13,11 +13,11 @@ namespace Aera
         public string[] Aliases => Array.Empty<string>();
 
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             if (args.Length != 0)
             {
-                tool.cwl("Usage: clear");
+                tool.WriteLine("Usage: clear");
                 return;
             }
 
@@ -25,9 +25,9 @@ namespace Aera
             Console.WriteLine("\x1b[3J"); // extra thing to fully clear the console since just Console.Clear(); doesn't work
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwl("clear: does not accept piped input"); // this is because i am lazy
+            tool.WriteLine("clear: does not accept piped input"); // this is because i am lazy
         }
     }
 }

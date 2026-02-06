@@ -15,7 +15,7 @@ namespace Aera
 
         public string[] Aliases => Array.Empty<string>();
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             if (args.Contains("--help"))
             {
@@ -44,7 +44,7 @@ namespace Aera
                     case "-L":
                         if (i + 1 >= args.Length || !int.TryParse(args[i + 1], out maxDepth))
                         {
-                            tool.cwlc("tree: invalid depth for -L", "Red");
+                            tool.WriteLineColor("tree: invalid depth for -L", "Red");
                             return;
                         }
                         i++; // consume depth
@@ -53,7 +53,7 @@ namespace Aera
                     default:
                         if (args[i].StartsWith("-"))
                         {
-                            tool.cwlc($"tree: unknown option '{args[i]}'", "Red");
+                            tool.WriteLineColor($"tree: unknown option '{args[i]}'", "Red");
                             return;
                         }
 
@@ -64,28 +64,28 @@ namespace Aera
 
             if (!Directory.Exists(path))
             {
-                tool.cwlc("tree: directory not found", "Red");
+                tool.WriteLineColor("tree: directory not found", "Red");
                 return;
             }
 
-            tool.cwlc(fullPath ? path : Path.GetFileName(path), "DarkCyan");
+            tool.WriteLineColor(fullPath ? path : Path.GetFileName(path), "DarkCyan");
             PrintTree(path, "", 0, maxDepth, dirsOnly, fullPath, tool);
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwl("tree: does not accept piped input");
+            tool.WriteLine("tree: does not accept piped input");
         }
 
-        private void ShowHelp(_s tool)
+        private void ShowHelp(ShellContext tool)
         {
-            tool.cwl("Usage: tree [options] [path]");
-            tool.cwl("");
-            tool.cwl("Options:");
-            tool.cwl("  -d            Directories only");
-            tool.cwl("  -L <depth>    Limit display depth");
-            tool.cwl("  -f            Show full paths");
-            tool.cwl("  --help        Show this help message");
+            tool.WriteLine("Usage: tree [options] [path]");
+            tool.WriteLine("");
+            tool.WriteLine("Options:");
+            tool.WriteLine("  -d            Directories only");
+            tool.WriteLine("  -L <depth>    Limit display depth");
+            tool.WriteLine("  -f            Show full paths");
+            tool.WriteLine("  --help        Show this help message");
         }
 
         private void PrintTree(
@@ -95,7 +95,7 @@ namespace Aera
             int maxDepth,
             bool dirsOnly,
             bool fullPath,
-            _s tool)
+            ShellContext tool)
         {
             if (depth >= maxDepth)
                 return;
@@ -110,7 +110,7 @@ namespace Aera
             }
             catch
             {
-                tool.cwlc($"{indent}└── [access denied]", "Red");
+                tool.WriteLineColor($"{indent}└── [access denied]", "Red");
                 return;
             }
 
@@ -129,7 +129,7 @@ namespace Aera
                     ? list[i]
                     : Path.GetFileName(list[i]);
 
-                tool.cwlc(
+                tool.WriteLineColor(
                     $"{indent}{(isLast ? "└── " : "├── ")}{name}",
                     isDir ? "Yellow" : "Gray"
                 );

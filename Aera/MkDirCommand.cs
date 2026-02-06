@@ -13,11 +13,11 @@ namespace Aera
         public bool IsDestructive => true;
         public string[] Aliases => Array.Empty<string>();
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             if (args.Length != 1)
             {
-                tool.cwl("Usage: mkdir <directory>");
+                tool.WriteLine("Usage: mkdir <directory>");
                 return;
             }
 
@@ -25,28 +25,28 @@ namespace Aera
 
             if (Directory.Exists(path))
             {
-                tool.cwlc("mkdir: directory already exists", "Yellow");
+                tool.WriteLineColor("mkdir: directory already exists", "Yellow");
                 return;
             }
 
             try
             {
                 Directory.CreateDirectory(path);
-                tool.cwlc("Directory created.", "Green");
+                tool.WriteLineColor("Directory created.", "Green");
             }
             catch (UnauthorizedAccessException)
             {
-                tool.cwlc("mkdir: permission denied", "Red");
+                tool.WriteLineColor("mkdir: permission denied", "Red");
             }
             catch (Exception ex)
             {
-                tool.cwlc($"mkdir: {ex.Message}", "Red");
+                tool.WriteLineColor($"mkdir: {ex.Message}", "Red");
             }
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwlc("mkdir: cannot be used in a pipe", "Red");
+            tool.WriteLineColor("mkdir: cannot be used in a pipe", "Red");
         }
     }
 }

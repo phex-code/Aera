@@ -13,9 +13,9 @@ namespace Aera
 
         string[] Aliases { get; }
 
-        void Execute(string[] args, _s tool);
+        void Execute(string[] args, ShellContext tool);
 
         // Only called if AcceptsPipeInput == true
-        void ExecutePipe(string input, string[] args, _s tool);
+        void ExecutePipe(string input, string[] args, ShellContext tool);
     }
 }

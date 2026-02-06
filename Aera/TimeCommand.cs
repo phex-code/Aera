@@ -13,14 +13,14 @@ namespace Aera
 
         public string[] Aliases => Array.Empty<string>();
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
-            tool.cwl(DateTime.Now.ToString("HH:mm:ss"));
+            tool.WriteLine(DateTime.Now.ToString("HH:mm:ss"));
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwl("time: does not accept piped input");
+            tool.WriteLine("time: does not accept piped input");
         }
     }
     internal class DateCommand : ICommand
@@ -35,14 +35,14 @@ namespace Aera
 
         public string[] Aliases => Array.Empty<string>();
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
-            tool.cwl(DateTime.Now.ToString("dd/MM/yyyy"));
+            tool.WriteLine(DateTime.Now.ToString("dd/MM/yyyy"));
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwl("date: does not accept piped input");
+            tool.WriteLine("date: does not accept piped input");
         }
     }
 }

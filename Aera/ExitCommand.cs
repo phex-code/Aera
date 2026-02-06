@@ -13,14 +13,14 @@ namespace Aera
 
         public string[] Aliases => new[] { "exit", "close", "shutdown" };
 
-        public void Execute(string[] args, _s tool)
+        public void Execute(string[] args, ShellContext tool)
         {
             Environment.Exit(0);
         }
 
-        public void ExecutePipe(string input, string[] args, _s tool)
+        public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.cwlc("exit: cannot be used in a pipe", "Red");
+            tool.WriteLineColor("exit: cannot be used in a pipe", "Red");
         }
     }
 }
