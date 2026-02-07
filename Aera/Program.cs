@@ -49,29 +49,28 @@ namespace Aera
             manager.Register(new HelloCommand());          // hello | hi | hey | hai — print a greeting to the console
             manager.Register(new EchoCommand());           // echo — write text to the console
 
-            string[] UserCredentials = new string[2];
+            string[] userCredentials;
             var tool = new ShellContext();
 
             tool.WriteLine("Welcome to Aera CLI!");
             Thread.Sleep(1500);
             manager.Execute("clear", tool);
             if (File.Exists("user.ss"))
-                {
-                    UserCredentials = File.ReadAllLines("user.ss");
-                    tool.LoadUserCredentials(UserCredentials);
-                    tool.Login();
-                }
-                else
-                    UserCredentials = tool.CreateUser();
-            string n = tool.GetUsername();
+            {
+                userCredentials = File.ReadAllLines("user.ss");
+                tool.LoadUserCredentials(userCredentials);
+                tool.Login();
+            }
+            else
+                userCredentials = tool.CreateUser();
+            var n = tool.GetUsername();
             manager.Execute("fetch", tool);
             while (true)
             {
                 tool.WriteColored($"{n}> ", "Cyan");
-                string input = tool.ReadLine();
+                var input = tool.ReadLine();
                 manager.Execute(input, tool);
             }
-
         }
     }
 }

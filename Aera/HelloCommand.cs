@@ -15,7 +15,7 @@ namespace Aera
         public void Execute(string[] args, ShellContext tool)
         {
             var rnd = new Random();
-            int hey = rnd.Next(0, 9);
+            var hey = rnd.Next(0, 9);
             string[] heys = { "HAII", "Welcome to Aera", "Welcome", "Salutations", "Greetings", "Hello and welcome", "Goodday", "It's a pleasure meeting you", "Greeted be thy"};
             tool.WriteLine(heys[hey]);
         }

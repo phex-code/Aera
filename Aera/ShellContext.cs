@@ -11,15 +11,15 @@ namespace Aera
         public bool IsSudo { get; set; }
         public bool CaptureMode { get; set; }
 
-        private readonly StringBuilder buffer = new();
-        public string[] UserCredentials = new string[2];
+        private readonly StringBuilder _buffer = new();
+        private string[] _userCredentials = new string[2];
 
         /* ================= OUTPUT ================= */
 
         public void WriteLine(string t)
         {
             if (CaptureMode)
-                buffer.AppendLine(t);
+                _buffer.AppendLine(t);
             else
                 Console.WriteLine(t);
         }
@@ -27,7 +27,7 @@ namespace Aera
         public void Write(string t)
         {
             if (CaptureMode)
-                buffer.Append(t);
+                _buffer.Append(t);
             else
                 Console.Write(t);
         }
@@ -36,7 +36,7 @@ namespace Aera
         {
             if (CaptureMode)
             {
-                buffer.Append(t);
+                _buffer.Append(t);
                 return;
             }
 
@@ -51,7 +51,7 @@ namespace Aera
         {
             if (CaptureMode)
             {
-                buffer.AppendLine(t);
+                _buffer.AppendLine(t);
                 return;
             }
 
@@ -64,8 +64,8 @@ namespace Aera
 
         public string FlushPipeBuffer()
         {
-            string result = buffer.ToString();
-            buffer.Clear();
+            var result = _buffer.ToString();
+            _buffer.Clear();
             return result;
         }
 
@@ -91,21 +91,21 @@ namespace Aera
                 password = ReadLine();
             } while (string.IsNullOrWhiteSpace(password));
 
-            UserCredentials[0] = username;
-            UserCredentials[1] = password;
+            _userCredentials[0] = username;
+            _userCredentials[1] = password;
 
-            File.WriteAllLines("user.ss", UserCredentials);
+            File.WriteAllLines("user.ss", _userCredentials);
 
             WriteLineColored($"User {username} created.", "Green");
             Thread.Sleep(1200);
             Console.Clear();
 
-            return UserCredentials;
+            return _userCredentials;
         }
 
         public void LoadUserCredentials(string[] inf)
         {
-            UserCredentials = inf;
+            _userCredentials = inf;
         }
 
         public void Login()
@@ -113,9 +113,9 @@ namespace Aera
             while (true)
             {
                 WriteColored("Password: ", "Cyan");
-                string pass = ReadLine();
+                var pass = ReadLine();
 
-                if (pass == UserCredentials[1])
+                if (pass == _userCredentials[1])
                 {
                     WriteLineColored("Login success", "Green");
                     Thread.Sleep(1000);
@@ -134,24 +134,24 @@ namespace Aera
         public void ShowUser(bool sudo)
         {
             WriteLineColored("User Information:", "DarkCyan");
-            WriteLineColored($" - Username: {UserCredentials[0]}", "DarkCyan");
+            WriteLineColored($" - Username: {_userCredentials[0]}", "DarkCyan");
 
-            if (!sudo)
-                WriteLineColored($" - Password: {"".PadLeft(UserCredentials[1].Length, '*')}", "DarkCyan");
-            else
-                WriteLineColored($" - Password: {UserCredentials[1]}", "DarkCyan");
+            WriteLineColored(
+                !sudo
+                    ? $" - Password: {"".PadLeft(_userCredentials[1].Length, '*')}"
+                    : $" - Password: {_userCredentials[1]}", "DarkCyan");
         }
 
-        public string GetUsername() => UserCredentials[0];
+        public string GetUsername() => _userCredentials[0];
 
         /* ================= SUDO ================= */
 
         public bool AuthenticateSudo()
         {
             WriteColored("[sudo] Enter password: ", "Yellow");
-            string attempt = ReadLine();
+            var attempt = ReadLine();
 
-            if (attempt != UserCredentials[1])
+            if (attempt != _userCredentials[1])
             {
                 WriteLineColored("No sudo: authentication failed.", "Red");
                 return false;
@@ -195,7 +195,7 @@ namespace Aera
             const string white = "\u001b[37m";
             const string reset = "\u001b[0m";
 
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
 
             // Top border
             sb.AppendLine($"{green}{topLeft}{new string(horizontal[0], contentWidth + 2)}{topRight}{reset}");
@@ -203,8 +203,8 @@ namespace Aera
             // Content lines
             foreach (var line in lines)
             {
-                string safeLine = line ?? string.Empty;
-                string padded = safeLine.PadRight(contentWidth, ' ');
+                var safeLine = line ?? string.Empty;
+                var padded = safeLine.PadRight(contentWidth, ' ');
 
                 sb.AppendLine($"{green}{vertical}{reset} {white}{padded}{reset} {green}{vertical}{reset}");
             }

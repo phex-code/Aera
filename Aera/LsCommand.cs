@@ -15,7 +15,7 @@ namespace Aera
 
         public void Execute(string[] args, ShellContext tool)
         {
-            string dir = Directory.GetCurrentDirectory();
+            var dir = Directory.GetCurrentDirectory();
 
             tool.WriteLineColored($"Directory: {dir}", "DarkCyan");
 

@@ -12,10 +12,10 @@ namespace Aera
     internal class CommandManager
     {
         // Fast lookup by command name or alias
-        private readonly Dictionary<string, ICommand> commands = new();
+        private readonly Dictionary<string, ICommand> _commands = new();
 
         // Preserves registration order for help output
-        private readonly List<ICommand> orderedCommands = new();
+        private readonly List<ICommand> _orderedCommands = new();
 
         // ───────────────────── Registration ─────────────────────
 
@@ -25,14 +25,14 @@ namespace Aera
         public void Register(ICommand command)
         {
             // Register primary name
-            commands[command.Name.ToLower()] = command;
+            _commands[command.Name.ToLower()] = command;
 
             // Register aliases
             foreach (var alias in command.Aliases)
-                commands[alias.ToLower()] = command;
+                _commands[alias.ToLower()] = command;
 
             // Preserve order for help/man
-            orderedCommands.Add(command);
+            _orderedCommands.Add(command);
         }
 
         // ───────────────────── Execution Entry ─────────────────────
@@ -72,10 +72,10 @@ namespace Aera
             if (parts.Length == 0)
                 return;
 
-            string name = parts[0].ToLower();
+            var name = parts[0].ToLower();
             string[] args = parts.Skip(1).ToArray();
 
-            if (!commands.TryGetValue(name, out var cmd))
+            if (!_commands.TryGetValue(name, out var cmd))
             {
                 tool.WriteLine($"Command '{name}' not recognized.");
                 return;
@@ -118,7 +118,7 @@ namespace Aera
             string name = parts[0].ToLower();
             string[] args = parts.Skip(1).ToArray();
 
-            if (!commands.TryGetValue(name, out var cmd))
+            if (!_commands.TryGetValue(name, out var cmd))
             {
                 tool.WriteLine($"Command '{name}' not recognized.");
                 return;
@@ -148,7 +148,7 @@ namespace Aera
         {
             name = name.ToLower();
 
-            if (!commands.TryGetValue(name, out var command))
+            if (!_commands.TryGetValue(name, out var command))
             {
                 tool.WriteLine($"Command '{name}' not recognized.");
                 return;
@@ -183,7 +183,7 @@ namespace Aera
         /// </summary>
         public bool TryGet(string name, out ICommand cmd)
         {
-            return commands.TryGetValue(name, out cmd);
+            return _commands.TryGetValue(name, out cmd);
         }
 
         /// <summary>
@@ -193,7 +193,7 @@ namespace Aera
         {
             tool.WriteLine("Aera Command Manual:");
 
-            var uniqueCommands = orderedCommands
+            var uniqueCommands = _orderedCommands
                 .GroupBy(c => c.Name)
                 .Select(g => g.First());
 
@@ -222,13 +222,13 @@ namespace Aera
         {
             tool.WriteLine("Aera Command Manual:");
 
-            foreach (var cmd in orderedCommands)
+            foreach (var cmd in _orderedCommands)
             {
-                string aliasText = cmd.Aliases.Length > 0
+                var aliasText = cmd.Aliases.Length > 0
                     ? $" ({string.Join(", ", cmd.Aliases)})"
                     : "";
 
-                string danger = cmd.IsDestructive ? " !" : "";
+                var danger = cmd.IsDestructive ? " !" : "";
 
                 tool.WriteLine($"  {cmd.Name,-12} {cmd.Description}{aliasText}{danger}");
                 tool.WriteLine("  " + cmd.Usage + "\n");

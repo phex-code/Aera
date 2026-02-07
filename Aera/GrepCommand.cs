@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
+﻿
 namespace Aera
 {
     internal class GrepCommand : ICommand
@@ -42,7 +39,7 @@ namespace Aera
 
                 foreach (var line in File.ReadLines(file))
                 {
-                    if (Matches(line, pattern, comparison, options.Invert))
+                    if (pattern != null && Matches(line, pattern, comparison, options.Invert))
                         tool.WriteLine(line);
                 }
             }
@@ -61,7 +58,7 @@ namespace Aera
             {
                 var line = raw.TrimEnd('\r');
 
-                if (Matches(line, pattern, comparison, options.Invert))
+                if (pattern != null && Matches(line, pattern, comparison, options.Invert))
                     tool.WriteLine(line);
             }
         }
@@ -82,7 +79,7 @@ namespace Aera
             string[] args,
             ShellContext tool,
             out GrepOptions options,
-            out string pattern,
+            out string? pattern,
             out List<string> files)
         {
             options = new GrepOptions();

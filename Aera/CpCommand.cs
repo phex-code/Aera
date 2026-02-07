@@ -15,8 +15,8 @@ namespace Aera
 
         public void Execute(string[] args, ShellContext tool)
         {
-            bool recursive = false;
-            int index = 0;
+            var recursive = false;
+            var index = 0;
 
             if (args.Length > 0 && args[0] == "-r")
             {
@@ -30,8 +30,8 @@ namespace Aera
                 return;
             }
 
-            string source = args[index];
-            string dest = args[index + 1];
+            var source = args[index];
+            var dest = args[index + 1];
 
             try
             {
@@ -80,13 +80,13 @@ namespace Aera
 
             foreach (var file in Directory.GetFiles(source))
             {
-                string target = Path.Combine(dest, Path.GetFileName(file));
+                var target = Path.Combine(dest, Path.GetFileName(file));
                 File.Copy(file, target, true);
             }
 
             foreach (var dir in Directory.GetDirectories(source))
             {
-                string target = Path.Combine(dest, Path.GetFileName(dir));
+                var target = Path.Combine(dest, Path.GetFileName(dir));
                 CopyDirectory(dir, target);
             }
         }

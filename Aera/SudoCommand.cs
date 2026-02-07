@@ -5,7 +5,7 @@ namespace Aera
 {
     internal class SudoCommand : ICommand
     {
-        private readonly CommandManager manager;
+        private readonly CommandManager _manager;
 
         public string Name => "sudo";
         public string Description => "Executes a command with elevated privileges";
@@ -17,7 +17,7 @@ namespace Aera
 
         public SudoCommand(CommandManager mgr)
         {
-            manager = mgr;
+            _manager = mgr;
         }
 
         public void Execute(string[] args, ShellContext tool)
@@ -31,15 +31,15 @@ namespace Aera
             if (!tool.AuthenticateSudo())
                 return;
 
-            bool previousSudo = tool.IsSudo;
+            var previousSudo = tool.IsSudo;
             tool.IsSudo = true;
 
             try
             {
-                string commandName = args[0];
+                var commandName = args[0];
                 string[] commandArgs = args.Skip(1).ToArray();
 
-                manager.ExecuteSudo(commandName, commandArgs, tool);
+                _manager.ExecuteSudo(commandName, commandArgs, tool);
             }
             finally
             {

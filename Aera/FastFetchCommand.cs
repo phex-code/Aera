@@ -92,7 +92,7 @@ namespace Aera
             try
             {
                 // Uses GlobalMemoryStatusEx via P/Invoke
-                MEMORYSTATUSEX mem = new MEMORYSTATUSEX();
+                Memorystatusex mem = new Memorystatusex();
                 if (GlobalMemoryStatusEx(mem))
                 {
                     ulong total = mem.ullTotalPhys;
@@ -107,9 +107,9 @@ namespace Aera
 
         // Windows native struct
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        private class MEMORYSTATUSEX
+        private class Memorystatusex
         {
-            public uint dwLength = (uint)Marshal.SizeOf(typeof(MEMORYSTATUSEX));
+            public uint dwLength = (uint)Marshal.SizeOf(typeof(Memorystatusex));
             public uint dwMemoryLoad;
             public ulong ullTotalPhys;
             public ulong ullAvailPhys;
@@ -121,7 +121,7 @@ namespace Aera
         }
 
         [DllImport("kernel32.dll")]
-        private static extern bool GlobalMemoryStatusEx([In, Out] MEMORYSTATUSEX lpBuffer);
+        private static extern bool GlobalMemoryStatusEx([In, Out] Memorystatusex lpBuffer);
 
         // ------------------------
         // Helpers

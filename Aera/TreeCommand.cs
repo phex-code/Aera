@@ -122,10 +122,10 @@ namespace Aera
 
             for (int i = 0; i < list.Length; i++)
             {
-                bool isLast = i == list.Length - 1;
-                bool isDir = Directory.Exists(list[i]);
+                var isLast = i == list.Length - 1;
+                var isDir = Directory.Exists(list[i]);
 
-                string name = fullPath
+                var name = fullPath
                     ? list[i]
                     : Path.GetFileName(list[i]);
 

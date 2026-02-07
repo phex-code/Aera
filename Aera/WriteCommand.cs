@@ -21,8 +21,8 @@ namespace Aera
                 return;
             }
 
-            string type = args[0].ToLower();
-            string text = string.Join(" ", args, 1, args.Length - 1);
+            var type = args[0].ToLower();
+            var text = string.Join(" ", args, 1, args.Length - 1);
 
             Write(type, text, tool);
         }
@@ -33,7 +33,7 @@ namespace Aera
             if (string.IsNullOrWhiteSpace(input))
                 return;
 
-            string type = args.Length > 0 ? args[0].ToLower() : "text";
+            var type = args.Length > 0 ? args[0].ToLower() : "text";
 
             Write(type, input.TrimEnd(), tool);
         }

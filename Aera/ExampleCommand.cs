@@ -10,8 +10,8 @@ namespace Aera
         public string Description => "Used as an example and base"; // description of what the command does
         public string Usage => "Usage: example"; // describes how to use the command
 
-        public bool AcceptsPipeInput => false; // wether it accepts piping (multiple commands run on 1 line)
-        public bool IsDestructive => false; // wether the command is destructive
+        public bool AcceptsPipeInput => false; // whether it accepts piping (multiple commands run on 1 line)
+        public bool IsDestructive => false; // whether the command is destructive
 
         public string[] Aliases => new[] { "examp", "exmpl" }; // other strings to run the same command
 

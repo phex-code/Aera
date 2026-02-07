@@ -55,15 +55,12 @@ namespace Aera
 
         private static (int lines, int words, int chars) Count(string text)
         {
-            int chars = text.Length;
+            var chars = text.Length;
 
-            int lines = 0;
-            foreach (char c in text)
-                if (c == '\n')
-                    lines++;
+            var lines = text.Count(c => c == '\n');
 
-            int words = text
-                .Split((char[])null, StringSplitOptions.RemoveEmptyEntries)
+            var words = text
+                .Split((char[])null!, StringSplitOptions.RemoveEmptyEntries)
                 .Length;
 
             return (lines, words, chars);
@@ -74,7 +71,7 @@ namespace Aera
             WcOptions options,
             ShellContext tool)
         {
-            bool anyFlag =
+            var anyFlag =
                 options.Lines || options.Words || options.Chars;
 
             if (!anyFlag)

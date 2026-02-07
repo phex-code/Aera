@@ -21,7 +21,7 @@ namespace Aera
                 return;
             }
 
-            string path = Path.GetFullPath(args[0]);
+            var path = Path.GetFullPath(args[0]);
 
             if (!File.Exists(path))
             {

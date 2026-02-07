@@ -21,8 +21,8 @@ namespace Aera
                 return;
             }
 
-            bool recursive = false;
-            int index = 0;
+            var recursive = false;
+            var index = 0;
 
             if (args.Length > 0 && args[0] == "-r")
             {
@@ -36,10 +36,10 @@ namespace Aera
                 return;
             }
 
-            string target = args[index];
+            var target = args[index];
 
-            bool isFile = File.Exists(target);
-            bool isDir = Directory.Exists(target);
+            var isFile = File.Exists(target);
+            var isDir = Directory.Exists(target);
 
             if (!isFile && !isDir)
             {
@@ -53,8 +53,8 @@ namespace Aera
                 return;
             }
 
-            string what = isDir ? "directory" : "file";
-            string msg = $"Remove {what} '{target}' permanently?";
+            var what = isDir ? "directory" : "file";
+            var msg = $"Remove {what} '{target}' permanently?";
 
             if (!tool.Confirm(msg, defaultYes: false))
             {

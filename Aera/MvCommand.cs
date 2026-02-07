@@ -27,8 +27,8 @@ namespace Aera
                 return;
             }
 
-            string source = args[0];
-            string dest = args[1];
+            var source = args[0];
+            var dest = args[1];
 
             try
             {
