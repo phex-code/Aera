@@ -7,8 +7,8 @@ namespace Aera
     internal class EchoCommand : ICommand
     {
         public string Name => "echo";
-        public string Description => "Writes text to the console";
-        public string Usage => "Usage: echo [-n] [-e|-E] [-c <color>] <text>";
+        public string Description => "Writes text to the console with optional formatting and transformations";
+        public string Usage => "Usage: echo [-n] [-e|-E] [-c <color>] [--upper] [--lower] [--repeat N] [--box] <text>";
 
         public bool AcceptsPipeInput => true;
         public bool IsDestructive => false;
@@ -32,6 +32,10 @@ namespace Aera
             bool newline = true;
             bool interpretEscapes = false;
             string color = null;
+            bool upper = false;
+            bool lower = false;
+            bool box = false;
+            int repeat = 1;
 
             var textParts = new System.Collections.Generic.List<string>();
 
@@ -39,25 +43,33 @@ namespace Aera
             {
                 var arg = args[i];
 
-                if (arg == "-n")
-                    newline = false;
-                else if (arg == "-e")
-                    interpretEscapes = true;
-                else if (arg == "-E")
-                    interpretEscapes = false;
-                else if (arg == "-c")
+                switch (arg)
                 {
-                    if (i + 1 >= args.Length)
-                    {
-                        tool.WriteLineColored("echo: missing color value", "Red");
-                        return;
-                    }
-
-                    color = args[++i];
-                }
-                else
-                {
-                    textParts.Add(arg);
+                    case "-n": newline = false; break;
+                    case "-e": interpretEscapes = true; break;
+                    case "-E": interpretEscapes = false; break;
+                    case "-c":
+                        if (i + 1 >= args.Length)
+                        {
+                            tool.WriteLineColored("echo: missing color value", "Red");
+                            return;
+                        }
+                        color = args[++i];
+                        break;
+                    case "--upper": upper = true; break;
+                    case "--lower": lower = true; break;
+                    case "--box": box = true; break;
+                    case "--repeat":
+                        if (i + 1 >= args.Length || !int.TryParse(args[i + 1], out repeat) || repeat < 1)
+                        {
+                            tool.WriteLineColored("echo: invalid repeat count", "Red");
+                            return;
+                        }
+                        i++;
+                        break;
+                    default:
+                        textParts.Add(arg);
+                        break;
                 }
             }
 
@@ -74,7 +86,22 @@ namespace Aera
             if (interpretEscapes)
                 text = ParseEscapes(text);
 
-            Output(text, newline, color, tool);
+            if (upper) text = text.ToUpper();
+            if (lower) text = text.ToLower();
+
+            for (int i = 0; i < repeat; i++)
+            {
+                if (box)
+                {
+                    string[] lines = text.Split('\n');
+                    tool.WriteLine(tool.RenderRoundedBox(lines));
+                    if (newline) tool.WriteLine("");
+                }
+                else
+                {
+                    Output(text, newline, color, tool);
+                }
+            }
         }
 
         /* ================= OUTPUT ================= */
@@ -83,17 +110,13 @@ namespace Aera
         {
             if (!string.IsNullOrWhiteSpace(color))
             {
-                if (newline)
-                    tool.WriteLineColored(text, color);
-                else
-                    tool.WriteColored(text, color);
+                if (newline) tool.WriteLineColored(text, color);
+                else tool.WriteColored(text, color);
             }
             else
             {
-                if (newline)
-                    tool.WriteLine(text);
-                else
-                    tool.Write(text);
+                if (newline) tool.WriteLine(text);
+                else tool.Write(text);
             }
         }
 
@@ -102,7 +125,6 @@ namespace Aera
         private string ParseEscapes(string input)
         {
             var sb = new StringBuilder();
-
             for (int i = 0; i < input.Length; i++)
             {
                 if (input[i] == '\\' && i + 1 < input.Length)
@@ -123,7 +145,6 @@ namespace Aera
                     sb.Append(input[i]);
                 }
             }
-
             return sb.ToString();
         }
     }
