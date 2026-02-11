@@ -4,10 +4,18 @@ namespace Aera
 {
     internal class Program
     {
+        public static string user = "";
         static void Main(string[] args)
         {
             var manager = new CommandManager();
             Console.OutputEncoding = System.Text.Encoding.UTF8;
+            
+            var tool = new ShellContext();
+            string fullPath;
+            string file = @"user.ss";
+            fullPath = Path.GetFullPath(file);
+
+            user = fullPath;
 
             // Register commands
 
@@ -64,7 +72,6 @@ namespace Aera
 
 
             string[] userCredentials;
-            var tool = new ShellContext();
 
             tool.WriteLine("Welcome to Aera CLI!");
             Thread.Sleep(1500);

@@ -18,7 +18,7 @@ namespace Aera
 
         public void Execute(string[] args, ShellContext tool)
         {
-            string[] userCredentials = File.ReadAllLines("user.ss");
+            string[] userCredentials = File.ReadAllLines(Program.user);
 
             tool.LoadUserCredentials(userCredentials);
 
