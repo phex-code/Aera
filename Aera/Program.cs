@@ -11,10 +11,11 @@ namespace Aera
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             
             var tool = new ShellContext();
+            
+            // set up user.ss full path
             string fullPath;
             string file = @"user.ss";
             fullPath = Path.GetFullPath(file);
-
             user = fullPath;
 
             // Register commands
