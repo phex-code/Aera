@@ -2,6 +2,8 @@ namespace Aera
 {
     // hypothetical
     
+    // make Nano a second program(probably best in python but idk)
+    
     // save current console to console.txt,
     // clear console,
     // run second program Nano and give the file we want to edit,
