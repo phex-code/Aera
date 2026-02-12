@@ -9,7 +9,7 @@
         public bool AcceptsPipeInput => true;
         public bool IsDestructive => false;
 
-        public string[] Aliases => new[] { "hi", "hey", "hai" };
+        public string[] Aliases => new[] { "hi", "hey", "hai", "hallo", "haii", "hii", "hoi" };
 
         public void Execute(string[] args, ShellContext tool)
         {
