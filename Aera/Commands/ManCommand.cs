@@ -22,7 +22,7 @@ namespace Aera.Commands
             }
 
             string command = args[0].ToLower();
-            string manualPath = Path.Combine("manuals", $"{command}.txt");
+            string manualPath = Path.Combine("Manuals", $"{command}.txt");
 
             if (!File.Exists(manualPath))
             {
