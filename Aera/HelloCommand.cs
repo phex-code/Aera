@@ -15,7 +15,7 @@
         {
             var rnd = new Random();
             var hey = rnd.Next(0, 9);
-            string[] heys = { "HAII", "Welcome to Aera", "Welcome", "Salutations", "Greetings", "Hello and welcome", "Good-day", "It's a pleasure meeting you", "Greeted be thy"};
+            string[] heys = { "HAII", "Welcome to Aera", "Welcome", "Salutations", "Greetings", "Hello and welcome", "Good-day", "It's a pleasure meeting you", "Greeted be thy", "hello", "hi"};
             tool.WriteLine(heys[hey]);
         }
 
