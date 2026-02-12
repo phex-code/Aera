@@ -5,93 +5,143 @@ namespace Aera
     internal class Program
     {
         public static string User = "";
+        public static string Py = "";
+
         static void Main(string[] args)
         {
             var manager = new CommandManager();
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            
-            var tool = new ShellContext();
-            
-            // set up user.ss full path
-            string fullPath;
-            string file = @"user.ss";
-            fullPath = Path.GetFullPath(file);
-            User = fullPath;
 
-            // Register commands
+            var tool = new ShellContext();
+
+            /* ================= ARGUMENT FLAGS ================= */
+
+            bool skipLogin = args.Contains("--skip-login");
+
+            /* ================= USER FILE PATH ================= */
+
+            string file = @"user.ss";
+            string fullPath = Path.GetFullPath(file);
+            User = fullPath;
+            
+            /* =================== PY FILE PATH =================== */
+            
+            string pyfile = @"nano.py";
+            string pyfullPath = Path.GetFullPath(file);
+            Py = pyfullPath;
+
+            /* ================= REGISTER COMMANDS ================= */
 
             // ───────────────────── Core / Meta ─────────────────────
-            manager.Register(new HelpCommand(manager)); // help | man — list all commands or show command manuals
-            manager.Register(new ExitCommand()); // exit | close | shutdown — terminate the CLI
-            manager.Register(new ClearCommand()); // clear — clear the console screen
+            manager.Register(new HelpCommand(manager));
+            manager.Register(new ExitCommand());
+            manager.Register(new ClearCommand());
 
             // ───────────── Identity / Privilege ─────────────
-            manager.Register(new WhoAmICommand()); // whoami — display the current username
-            manager.Register(new UserInfoCommand()); // userinfo — show user info (password masked without sudo)
-            manager.Register(new SudoCommand(manager)); // sudo — execute a command with elevated privileges
+            manager.Register(new WhoAmICommand());
+            manager.Register(new UserInfoCommand());
+            manager.Register(new SudoCommand(manager));
 
             // ───────────── Filesystem: Navigation ─────────────
-            manager.Register(new PwdCommand()); // pwd — print the current working directory
-            manager.Register(new CdCommand()); // cd — change the current directory
+            manager.Register(new PwdCommand());
+            manager.Register(new CdCommand());
 
             // ───────────── Filesystem: Inspection ─────────────
-            manager.Register(new LsCommand()); // ls — list files and directories in the current directory
-            manager.Register(new TreeCommand()); // tree — display directory structure recursively
-            manager.Register(new CatCommand()); // cat — output the contents of a file
-            manager.Register(new GrepCommand()); // grep — search for lines matching a pattern
-            manager.Register(new WcCommand()); // wc — count lines, words, and characters
-            manager.Register(new StatCommand()); // stat — display file or directory metadata
-            manager.Register(new FindCommand()); // find — recursive file search
-            manager.Register(new HeadCommand()); // head — display first N lines of file or piped input
-            manager.Register(new TailCommand()); // tail — display last N lines of file or piped input
-            manager.Register(new DuCommand()); // du — calculate directory disk usage
+            manager.Register(new LsCommand());
+            manager.Register(new TreeCommand());
+            manager.Register(new CatCommand());
+            manager.Register(new GrepCommand());
+            manager.Register(new WcCommand());
+            manager.Register(new StatCommand());
+            manager.Register(new FindCommand());
+            manager.Register(new HeadCommand());
+            manager.Register(new TailCommand());
+            manager.Register(new DuCommand());
 
             // ───────────── Filesystem: Mutation ─────────────
-            manager.Register(new TouchCommand()); // touch — create empty files or update timestamps
-            manager.Register(new MkdirCommand()); // mkdir — create a new directory
-            manager.Register(new RmCommand()); // rm — delete files or directories (destructive)
-            manager.Register(new CpCommand()); // cp — copy files or directories
-            manager.Register(new MvCommand()); // mv — move or rename files and directories
-            manager.Register(new NanoCommand()); // nano — edit file content
+            manager.Register(new TouchCommand());
+            manager.Register(new MkdirCommand());
+            manager.Register(new RmCommand());
+            manager.Register(new CpCommand());
+            manager.Register(new MvCommand());
+            manager.Register(new NanoCommand());
 
             // ───────────────────── Text Processing ─────────────────────
-            manager.Register(new SortCommand()); // sort — sort lines alphabetically
-            manager.Register(new UniqCommand()); // uniq — remove duplicate lines
+            manager.Register(new SortCommand());
+            manager.Register(new UniqCommand());
 
             // ───────────────────── Environment ─────────────────────
-            manager.Register(new EnvCommand()); // env — display environment variables
-            manager.Register(new WhichCommand()); // which — locate executable in PATH
+            manager.Register(new EnvCommand());
+            manager.Register(new WhichCommand());
 
             // ───────────────────── Utilities ─────────────────────
-            manager.Register(new DateCommand()); // date — display the current date
-            manager.Register(new TimeCommand()); // time — display the current time
-            manager.Register(new FastFetchCommand()); // fastfetch | fetch — displays device info in a square
+            manager.Register(new DateCommand());
+            manager.Register(new TimeCommand());
+            manager.Register(new FastFetchCommand());
 
             // ───────────── Output / Piping Helpers ─────────────
-            manager.Register(new WriteCommand()); // write — print formatted messages to the console
-            manager.Register(new HelloCommand()); // hello | hi | hey | hai — print a greeting to the console
-            manager.Register(new EchoCommand()); // echo — write text to the console
+            manager.Register(new WriteCommand());
+            manager.Register(new HelloCommand());
+            manager.Register(new EchoCommand());
 
+            /* ================= USER BOOTSTRAP ================= */
 
             string[] userCredentials;
 
             tool.WriteLine("Welcome to Aera CLI!");
             Thread.Sleep(1500);
+
             manager.Execute("clear", tool);
+
             if (File.Exists("user.ss"))
             {
                 userCredentials = File.ReadAllLines("user.ss");
                 tool.LoadUserCredentials(userCredentials);
-                tool.Login();
+
+                if (!skipLogin)
+                {
+                    tool.Login();
+                }
             }
             else
+            {
                 userCredentials = tool.CreateUser();
-            var n = tool.GetUsername();
-            manager.Execute("fetch", tool);
+            }
+
+            /* ================= RESTORE CONSOLE IF SKIPPED LOGIN ================= */
+
+            if (skipLogin && File.Exists("console.txt"))
+            {
+                Console.Clear();
+
+                try
+                {
+                    var content = File.ReadAllText("console.txt");
+                    Console.WriteLine(content);
+                }
+                catch
+                {
+                    // Fail silently — console restore is optional
+                }
+            }
+
+            /* ================= START SESSION ================= */
+
+            var username = tool.GetUsername();
+
+            // Only fetch on normal startup
+            if (!skipLogin)
+                manager.Execute("fetch", tool);
+
             while (true)
             {
-                tool.WriteColored($"{n}> ", "Cyan");
+                tool.WriteColored($"{username}> ", "Cyan");
+
                 var input = tool.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(input))
+                    continue;
+
                 manager.Execute(input, tool);
             }
         }

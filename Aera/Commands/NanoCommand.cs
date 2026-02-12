@@ -1,16 +1,7 @@
+using System.Diagnostics;
+
 namespace Aera.Commands
 {
-    // hypothetical
-    
-    // make Nano a second program(probably best in python but idk)
-    
-    // save current console to console.txt,
-    // clear console,
-    // run second program Nano and give the file we want to edit,
-    // Nano runs and does what it should,
-    // Nano closes starts aera with a variable that skips login and loads console.txt,
-    // console.txt loads and makes console content reappear.
-    
     internal class NanoCommand : ICommand
     {
         public string Name => "nano";
@@ -18,13 +9,40 @@ namespace Aera.Commands
         public string Usage => "Usage: nano <file>";
 
         public bool AcceptsPipeInput => false;
-        public bool IsDestructive => true;
+        public bool IsDestructive => false;
 
         public string[] Aliases => Array.Empty<string>();
 
         public void Execute(string[] args, ShellContext tool)
         {
-            tool.WriteLineColored("This command is under construction", "yellow");
+            if (args.Length == 0)
+            {
+                tool.WriteLineColored("nano: missing file operand", "Red");
+                return;
+            }
+
+            string file = args[0];
+
+            try
+            {
+                var psi = new ProcessStartInfo
+                {
+                    FileName = "python3", // or "python"
+                    Arguments = $"nano.py \"{file}\"",
+                    UseShellExecute = false,
+                    RedirectStandardInput = false,
+                    RedirectStandardOutput = false,
+                    RedirectStandardError = false
+                };
+
+                var process = Process.Start(psi);
+
+                process.WaitForExit(); // <<< THIS is the important part
+            }
+            catch (Exception ex)
+            {
+                tool.WriteLineColored($"nano error: {ex.Message}", "Red");
+            }
         }
 
         public void ExecutePipe(string input, string[] args, ShellContext tool)
