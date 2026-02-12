@@ -1,0 +1,16 @@
+EXIT(1)                    Aera Manual                    EXIT(1)
+
+NAME
+    exit - terminate the Aera CLI
+
+SYNOPSIS
+    exit
+
+DESCRIPTION
+    Closes the Aera CLI session and terminates the application.
+
+ALIASES
+    close | shutdown
+
+EXAMPLES
+    exit

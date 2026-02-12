@@ -1,0 +1,18 @@
+HELLO(1)                   Aera Manual                   HELLO(1)
+
+NAME
+    hello - display greeting
+
+SYNOPSIS
+    hello
+
+DESCRIPTION
+    Prints a greeting message.
+
+ALIASES
+    hi
+    hey
+    hai
+    hello
+    haii
+    hii

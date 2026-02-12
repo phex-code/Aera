@@ -1,0 +1,10 @@
+FIND(1)                    Aera Manual                    FIND(1)
+
+NAME
+    find - search for files recursively
+
+SYNOPSIS
+    find <directory> <pattern>
+
+DESCRIPTION
+    Searches for files matching a name pattern recursively.

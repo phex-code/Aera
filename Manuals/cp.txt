@@ -1,0 +1,10 @@
+CP(1)                      Aera Manual                      CP(1)
+
+NAME
+    cp - copy files or directories
+
+SYNOPSIS
+    cp <source> <destination>
+
+DESCRIPTION
+    Copies files or directories.

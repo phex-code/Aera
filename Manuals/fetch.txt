@@ -1,0 +1,10 @@
+FETCH(1)                   Aera Manual                   FETCH(1)
+
+NAME
+    fetch - display system information
+
+SYNOPSIS
+    fetch
+
+DESCRIPTION
+    Displays device and environment information in a formatted block.

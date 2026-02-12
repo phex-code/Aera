@@ -1,0 +1,10 @@
+MKDIR(1)                   Aera Manual                   MKDIR(1)
+
+NAME
+    mkdir - create directory
+
+SYNOPSIS
+    mkdir <directory>
+
+DESCRIPTION
+    Creates a new directory.

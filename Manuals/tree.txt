@@ -1,0 +1,10 @@
+TREE(1)                    Aera Manual                    TREE(1)
+
+NAME
+    tree - display directory structure
+
+SYNOPSIS
+    tree [directory]
+
+DESCRIPTION
+    Recursively displays folder structure as a tree.

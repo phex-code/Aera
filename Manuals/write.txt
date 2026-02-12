@@ -1,0 +1,11 @@
+WRITE(1)                   Aera Manual                   WRITE(1)
+
+NAME
+    write - formatted console output
+
+SYNOPSIS
+    write <message>
+
+DESCRIPTION
+    Outputs styled messages including success, error,
+    and warning formatting.

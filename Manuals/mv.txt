@@ -1,0 +1,10 @@
+MV(1)                      Aera Manual                      MV(1)
+
+NAME
+    mv - move or rename files
+
+SYNOPSIS
+    mv <source> <destination>
+
+DESCRIPTION
+    Moves or renames files or directories.

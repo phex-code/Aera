@@ -1,0 +1,10 @@
+DATE(1)                    Aera Manual                    DATE(1)
+
+NAME
+    date - display current date
+
+SYNOPSIS
+    date
+
+DESCRIPTION
+    Prints system date.

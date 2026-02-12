@@ -1,0 +1,10 @@
+WHOAMI(1)                  Aera Manual                  WHOAMI(1)
+
+NAME
+    whoami - display current username
+
+SYNOPSIS
+    whoami
+
+DESCRIPTION
+    Prints the username of the currently authenticated user.

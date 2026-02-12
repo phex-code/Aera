@@ -1,0 +1,11 @@
+CLEAR(1)                   Aera Manual                   CLEAR(1)
+
+NAME
+    clear - clear the console screen
+
+SYNOPSIS
+    clear
+
+DESCRIPTION
+    Removes all visible output from the console and resets
+    the cursor position to the top.

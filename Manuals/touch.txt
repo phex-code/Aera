@@ -1,0 +1,10 @@
+TOUCH(1)                   Aera Manual                   TOUCH(1)
+
+NAME
+    touch - create empty file or update timestamp
+
+SYNOPSIS
+    touch <file>
+
+DESCRIPTION
+    Creates a file if it does not exist or updates modification time.

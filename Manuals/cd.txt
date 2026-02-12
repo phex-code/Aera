@@ -1,0 +1,14 @@
+CD(1)                      Aera Manual                      CD(1)
+
+NAME
+    cd - change directory
+
+SYNOPSIS
+    cd <directory>
+
+DESCRIPTION
+    Changes the current working directory.
+
+EXAMPLES
+    cd Documents
+    cd ..

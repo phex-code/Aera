@@ -1,0 +1,12 @@
+USERINFO(1)                Aera Manual                USERINFO(1)
+
+NAME
+    userinfo - display user account information
+
+SYNOPSIS
+    userinfo
+
+DESCRIPTION
+    Displays stored user account details.
+
+    Password fields remain masked unless executed with sudo.

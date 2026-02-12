@@ -1,0 +1,10 @@
+WHICH(1)                   Aera Manual                   WHICH(1)
+
+NAME
+    which - locate command executable
+
+SYNOPSIS
+    which <command>
+
+DESCRIPTION
+    Displays the executable or registered command location.

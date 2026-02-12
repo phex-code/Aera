@@ -36,6 +36,7 @@ namespace Aera
             manager.Register(new HelpCommand(manager));
             manager.Register(new ExitCommand());
             manager.Register(new ClearCommand());
+            manager.Register(new ManCommand());
 
             // ───────────── Identity / Privilege ─────────────
             manager.Register(new WhoAmICommand());

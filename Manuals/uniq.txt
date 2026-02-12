@@ -1,0 +1,11 @@
+UNIQ(1)                    Aera Manual                    UNIQ(1)
+
+NAME
+    uniq - remove duplicate lines
+
+SYNOPSIS
+    uniq <file>
+    command | uniq
+
+DESCRIPTION
+    Removes consecutive duplicate lines.

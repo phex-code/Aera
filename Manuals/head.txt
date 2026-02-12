@@ -1,0 +1,11 @@
+HEAD(1)                    Aera Manual                    HEAD(1)
+
+NAME
+    head - display first lines of input
+
+SYNOPSIS
+    head <file>
+    command | head
+
+DESCRIPTION
+    Displays the first lines of input or file content.

@@ -1,0 +1,10 @@
+PWD(1)                     Aera Manual                     PWD(1)
+
+NAME
+    pwd - print working directory
+
+SYNOPSIS
+    pwd
+
+DESCRIPTION
+    Displays the full path of the current working directory.

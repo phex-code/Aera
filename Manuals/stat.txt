@@ -1,0 +1,15 @@
+STAT(1)                    Aera Manual                    STAT(1)
+
+NAME
+    stat - display file metadata
+
+SYNOPSIS
+    stat <file>
+
+DESCRIPTION
+    Displays detailed file or directory metadata including:
+
+        Size
+        Creation time
+        Last modification time
+        Attributes

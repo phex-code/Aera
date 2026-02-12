@@ -1,0 +1,11 @@
+WC(1)                      Aera Manual                      WC(1)
+
+NAME
+    wc - word, line, and character count
+
+SYNOPSIS
+    wc <file>
+    command | wc
+
+DESCRIPTION
+    Counts lines, words, and characters.

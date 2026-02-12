@@ -1,0 +1,11 @@
+GREP(1)                    Aera Manual                    GREP(1)
+
+NAME
+    grep - search text for patterns
+
+SYNOPSIS
+    grep <pattern> <file>
+    command | grep <pattern>
+
+DESCRIPTION
+    Searches input text or files for matching patterns.

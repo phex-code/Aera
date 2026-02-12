@@ -1,0 +1,10 @@
+CAT(1)                     Aera Manual                     CAT(1)
+
+NAME
+    cat - display file contents
+
+SYNOPSIS
+    cat <file>
+
+DESCRIPTION
+    Outputs the contents of a file to the console.

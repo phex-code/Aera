@@ -1,0 +1,11 @@
+TAIL(1)                    Aera Manual                    TAIL(1)
+
+NAME
+    tail - display last lines of input
+
+SYNOPSIS
+    tail <file>
+    command | tail
+
+DESCRIPTION
+    Displays the last lines of input or file content.

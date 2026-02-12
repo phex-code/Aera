@@ -1,0 +1,11 @@
+SORT(1)                    Aera Manual                    SORT(1)
+
+NAME
+    sort - sort lines alphabetically
+
+SYNOPSIS
+    sort <file>
+    command | sort
+
+DESCRIPTION
+    Sorts text input alphabetically.

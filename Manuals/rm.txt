@@ -1,0 +1,13 @@
+RM(1)                      Aera Manual                      RM(1)
+
+NAME
+    rm - remove files or directories
+
+SYNOPSIS
+    rm <target>
+
+DESCRIPTION
+    Deletes files or directories permanently.
+
+WARNING
+    This command is destructive.

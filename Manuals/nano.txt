@@ -1,0 +1,17 @@
+NANO(1)                    Aera Manual                    NANO(1)
+
+NAME
+    nano - simple text editor
+
+SYNOPSIS
+    nano <file>
+
+DESCRIPTION
+    Opens a file in the integrated text editor.
+
+CONTROLS
+    Ctrl+S    Save file
+    Ctrl+Q    Save and exit
+    Arrow Keys Navigate text
+    Enter     Insert new line
+    Backspace Delete characters

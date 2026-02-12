@@ -1,0 +1,17 @@
+DU(1)                      Aera Manual                      DU(1)
+
+NAME
+    du - disk usage statistics
+
+SYNOPSIS
+    du [directory] [-b|-k|-m|-g|-t]
+
+DESCRIPTION
+    Displays directory size.
+
+OPTIONS
+    -b   bytes
+    -k   kilobytes
+    -m   megabytes
+    -g   gigabytes
+    -t   terabytes

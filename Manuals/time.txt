@@ -1,0 +1,10 @@
+TIME(1)                    Aera Manual                    TIME(1)
+
+NAME
+    time - display current time
+
+SYNOPSIS
+    time
+
+DESCRIPTION
+    Prints system time.

@@ -1,0 +1,14 @@
+LS(1)                      Aera Manual                      LS(1)
+
+NAME
+    ls - list directory contents
+
+SYNOPSIS
+    ls
+
+DESCRIPTION
+    Displays files and directories within the current directory.
+
+OUTPUT
+    [DIR]   indicates directories
+    [FILE]  indicates files

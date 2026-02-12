@@ -9,7 +9,7 @@
         public bool AcceptsPipeInput => false;
         public bool IsDestructive => false;
 
-        public string[] Aliases => new[] { "man" };
+        public string[] Aliases => Array.Empty<string>();
 
         public void Execute(string[] args, ShellContext tool)
         {
@@ -29,7 +29,7 @@
 
             if (!mgr.TryGet(name, out var cmd))
             {
-                tool.WriteLine($"No manual entry for '{name}'.");
+                tool.WriteLine($"Unknown command '{name}'.");
                 return;
             }
 
@@ -38,7 +38,7 @@
 
         public void ExecutePipe(string input, string[] args, ShellContext tool)
         {
-            tool.WriteLineColored("help(man): cannot be used in a pipe", "Red");
+            tool.WriteLineColored("help: cannot be used in a pipe", "Red");
         }
     }
 }

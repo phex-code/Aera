@@ -1,0 +1,11 @@
+ECHO(1)                    Aera Manual                    ECHO(1)
+
+NAME
+    echo - print text to console
+
+SYNOPSIS
+    echo <text>
+    command | echo
+
+DESCRIPTION
+    Prints provided text or piped input.

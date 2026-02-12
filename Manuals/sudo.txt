@@ -1,0 +1,14 @@
+SUDO(1)                    Aera Manual                    SUDO(1)
+
+NAME
+    sudo - execute command with elevated privileges
+
+SYNOPSIS
+    sudo <command>
+
+DESCRIPTION
+    Executes a command with administrator privileges after
+    password verification.
+
+EXAMPLES
+    sudo rm file.txt
