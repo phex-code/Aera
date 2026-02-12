@@ -2,7 +2,7 @@
 
 Aera is a modular C# command-line shell that replicates and extends common Unix-style commands. It is designed as a learning project focused on command architecture, piping support, and extensibility.
 
-> ⚠️ Experimental project. APIs and behaviour may change.
+>  Experimental project. APIs and behaviour may change.
 
 ---
 
