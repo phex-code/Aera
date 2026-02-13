@@ -33,7 +33,7 @@ namespace Aera
                 ["Cyan"] = (0,255,255),
                 ["Magenta"] = (255,0,255),
                 ["Metablue"] = (45,175,200),
-                ["Monablue"] = (12,175,175),
+                ["Monablue"] = (120,175,175),
 
                 ["DarkCyan"] = (12,120,120),
                 ["DarkRed"] = (139,0,0),
