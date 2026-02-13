@@ -144,7 +144,10 @@ namespace Aera
 
             // Only fetch on normal startup
             if (!skipLogin)
+            {
+                tool.WriteLineColored("    ___                  \n   /   | ___  _________ _\n  / /| |/ _ \\/ ___/ __ `/\n / ___ /  __/ /  / /_/ / \n/_/  |_\\___/_/   \\__,_/  \n                         ", "green");
                 manager.Execute("fetch", tool);
+            }
 
             while (true)
             {
