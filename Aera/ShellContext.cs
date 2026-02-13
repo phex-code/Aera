@@ -69,6 +69,47 @@ namespace Aera
 
         /* ================= USER BOOTSTRAP ================= */
 
+        public string GetPassword()
+        {
+            WriteColored("Enter password: ", "Yellow");
+
+            List<char> passwordChars = new();
+            ConsoleKeyInfo key;
+
+            while (true)
+            {
+                key = Console.ReadKey(intercept: true);
+
+                // Stop on Enter
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    Console.WriteLine();
+                    break;
+                }
+
+                // Handle Backspace
+                if (key.Key == ConsoleKey.Backspace)
+                {
+                    if (passwordChars.Count > 0)
+                    {
+                        passwordChars.RemoveAt(passwordChars.Count - 1);
+                        Console.Write("\b \b"); // remove masking character
+                    }
+
+                    continue;
+                }
+
+                // Ignore control characters
+                if (char.IsControl(key.KeyChar))
+                    continue;
+
+                passwordChars.Add(key.KeyChar);
+                Console.Write("*"); // mask input
+            }
+
+            return new string(passwordChars.ToArray());
+        }
+
         public string[] CreateUser()
         {
             WriteLine("Create User");
@@ -84,7 +125,7 @@ namespace Aera
             do
             {
                 WriteColored("Enter password: ", "Yellow");
-                password = ReadLine();
+                password = GetPassword();
             } while (string.IsNullOrWhiteSpace(password));
 
             _userCredentials[0] = username;
@@ -108,8 +149,7 @@ namespace Aera
         {
             while (true)
             {
-                WriteColored("Password: ", "Cyan");
-                var pass = ReadLine();
+                var pass = GetPassword();
 
                 if (pass == _userCredentials[1])
                 {
@@ -144,8 +184,7 @@ namespace Aera
 
         public bool AuthenticateSudo()
         {
-            WriteColored("[sudo] Enter password: ", "Yellow");
-            var attempt = ReadLine();
+            var attempt = GetPassword();
 
             if (attempt != _userCredentials[1])
             {
