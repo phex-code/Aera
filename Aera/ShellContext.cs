@@ -42,7 +42,7 @@ namespace Aera
                 ["DarkGray"] = (120,120,120)
             };
 
-        public static class Theme
+        public class Theme
         {
             public const string Prompt = "Yellow";
             public const string Error = "Red";
