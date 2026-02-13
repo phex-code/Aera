@@ -17,7 +17,7 @@ namespace Aera.Commands
         {
             bool fileExists = true;
             string[] userCredentials = new string[2];
-            if (File.Exists(Program.User) && File.ReadAllText(Program.User).Length > 0)
+            if (File.Exists(Program.User) && File.ReadAllLines(Program.User).All(line => !string.IsNullOrWhiteSpace(line)))
             {
                 userCredentials = File.ReadAllLines(Program.User);
             }
