@@ -61,15 +61,19 @@
 
             try
             {
-                if (isFile)
+                if (!target.Contains("user.ss") && isFile)
                 {
                     File.Delete(target);
                     tool.WriteLineColored("File deleted", "green");
                 }
-                else
+                else if (!isFile)
                 {
                     Directory.Delete(target, recursive: true);
                     tool.WriteLineColored("Directory deleted", "green");
+                }
+                else
+                {
+                    tool.WriteLineColored("rm: user.ss cannot be removed", "red");
                 }
             }
             catch (UnauthorizedAccessException)
