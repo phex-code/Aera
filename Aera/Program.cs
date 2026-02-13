@@ -7,6 +7,9 @@ namespace Aera
         public static string User = "";
         public static string Py = "";
 
+        public static string Ascii =
+            "    _      _____   ____       _    \n   / \\    | ____| |  _ \\     / \\   \n  / _ \\   |  _|   | |_) |   / _ \\  \n / ___ \\  | |___  |  _ <   / ___ \\ \n/_/   \\_\\ |_____| |_| \\_\\ /_/   \\_\\";
+
         static void Main(string[] args)
         {
             var manager = new CommandManager();
@@ -145,7 +148,7 @@ namespace Aera
             // Only fetch on normal startup
             if (!skipLogin)
             {
-                tool.WriteLineColored("    _      _____   ____       _    \n   / \\    | ____| |  _ \\     / \\   \n  / _ \\   |  _|   | |_) |   / _ \\  \n / ___ \\  | |___  |  _ <   / ___ \\ \n/_/   \\_\\ |_____| |_| \\_\\ /_/   \\_\\", "green");
+                tool.WriteLineColored(Ascii, "green");
                 manager.Execute("fetch", tool);
             }
 
