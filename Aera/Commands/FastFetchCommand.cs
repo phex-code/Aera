@@ -15,26 +15,39 @@ namespace Aera.Commands
 
         public void Execute(string[] args, ShellContext tool)
         {
-            string[] userCredentials = File.ReadAllLines(Program.User);
-
-            tool.LoadUserCredentials(userCredentials);
-
-            var (totalRam, usedRam) = GetMemoryInfo();
-
-            string[] fetch =
+            bool fileExists = true;
+            string[] userCredentials = new string[2];
+            if (File.Exists(Program.User) && File.ReadAllText(Program.User).Length > 0)
             {
-                $"User: {userCredentials[0]}",
-                $"Hostname: {Environment.MachineName}",
-                $"OS: {RuntimeInformation.OSDescription}",
-                $"Architecture: {RuntimeInformation.OSArchitecture}",
-                $"Uptime: {GetUptime()}",
-                $"CPU Cores: {Environment.ProcessorCount}",
-                $"RAM Used: {FormatBytes(usedRam)}",
-                $"RAM Total: {FormatBytes(totalRam)}",
-                $".NET Version: {Environment.Version}"
-            };
+                userCredentials = File.ReadAllLines(Program.User);
+            }
+            else
+            {
+                tool.WriteLineColored("fastfetch: cannot find user.ss or user.ss is empty", "Red");
+                fileExists = false;
+            }
 
-            tool.WriteLineColored(tool.RenderRoundedBox(fetch), "Green");
+            if (fileExists)
+            {
+                tool.LoadUserCredentials(userCredentials);
+
+                var (totalRam, usedRam) = GetMemoryInfo();
+
+                string[] fetch =
+                {
+                    $"User: {userCredentials[0]}",
+                    $"Hostname: {Environment.MachineName}",
+                    $"OS: {RuntimeInformation.OSDescription}",
+                    $"Architecture: {RuntimeInformation.OSArchitecture}",
+                    $"Uptime: {GetUptime()}",
+                    $"CPU Cores: {Environment.ProcessorCount}",
+                    $"RAM Used: {FormatBytes(usedRam)}",
+                    $"RAM Total: {FormatBytes(totalRam)}",
+                    $".NET Version: {Environment.Version}"
+                };
+
+                tool.WriteLineColored(tool.RenderRoundedBox(fetch), "Green");
+            }
         }
 
         public void ExecutePipe(string input, string[] args, ShellContext tool)

@@ -93,8 +93,7 @@ namespace Aera
             Thread.Sleep(1500);
 
             manager.Execute("clear", tool);
-
-            if (File.Exists("user.ss"))
+            if (File.Exists("user.ss") && File.ReadAllText(User).Length > 0)
             {
                 userCredentials = File.ReadAllLines("user.ss");
                 tool.LoadUserCredentials(userCredentials);
