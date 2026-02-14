@@ -160,7 +160,7 @@ Creating Custom Commands
 Create a new class implementing ICommand.
 
 Example:
-
+```cs
 internal class MyCommand : ICommand
 {
     public string Name => "mycommand";
@@ -177,7 +177,7 @@ internal class MyCommand : ICommand
         Console.WriteLine("My custom command");
     }
 }
-
+```
 
 Register it inside Program
 
