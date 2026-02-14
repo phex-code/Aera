@@ -63,7 +63,10 @@ The project focuses on:
 - `sudo` – Elevated command execution (simulated)  
 - `fastfetch` – System information  
 - `hello` – Example greeting command  
-- `example` – Template/example command  
+- `example` – Template/example command
+
+#### File & Directory
+- `ping` - ping an ip
 
 ---
 
